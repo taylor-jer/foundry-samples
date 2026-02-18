@@ -57,15 +57,20 @@ tools = [add, multiply, divide]
 tools_by_name = {tool.name: tool for tool in tools}
 _llm_with_tools = None
 
+os.environ['AZURE_AI_PROJECT_ENDPOINT'] = 'https://taylor-jer-2482-resource.services.ai.azure.com/api/projects/taylor-jer-2482'
+deployment_name = 'Kimi-K2.5'
+endpoint =  "https://taylo-mlrsu5qj-eastus2.services.ai.azure.com"
+api_version = '2024-05-01-preview'
 def llm():
     try:
-        deployment_name = os.getenv("AZURE_AI_MODEL_DEPLOYMENT_NAME", "gpt-4o-mini")
         credential = DefaultAzureCredential()
         token_provider = get_bearer_token_provider(
             credential, "https://cognitiveservices.azure.com/.default"
         )
         llm = init_chat_model(
             f"azure_openai:{deployment_name}",
+            azure_endpoint=endpoint,
+            api_version=api_version,
             azure_ad_token_provider=token_provider,
         )
         return llm
